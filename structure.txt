@@ -1,0 +1,23 @@
+
+1) Init data structure
+
+Initiates data struct : nb of dead, etc
+
+2) Launch mutexes
+
+Calls pthreads_mutex_init() the same nb of times as the nb of philosophers
+pthread_mutex_init(&forks[i], NULL)
+
+3) Init philos
+
+Initializes the philosopher struct
+
+4) Launch threads
+
+Calling pthread_create and pthread_join
+
+5) Destroy threads
+
+
+
+
