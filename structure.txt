@@ -3,7 +3,7 @@
 
 Initiates data struct :
 
-- fills data with argv : nb_philos, t_tdie, t_teatm t_tsleep, nb_teat
+- fills data with argv : nb_philos, t_tdie, t_teat t_tsleep, nb_teat
 
 2) Launch mutexes
 
