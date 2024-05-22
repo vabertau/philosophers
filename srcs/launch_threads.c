@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:36:56 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/22 14:39:54 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:42:23 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,19 @@ void	*main_routine(void *philosopher)
 	return (philosopher);
 }
 
+/*
+Philosopher with even indexes wait for 1 ms so that philosopher sitting next to each other do not all take one fork which would block
+
+Philosophers alternatively eat, sleep, think
+*/
+
 void	*philo_routine(void *philosopher)
 {
 	t_philosopher *tmp;
 
 	tmp = (t_philosopher *)philosopher;
+	if (tmp->index % 2 == 0)
+		usleep(1);
 	while (1)
 	{
 		eat(tmp);

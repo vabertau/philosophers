@@ -52,5 +52,6 @@ void	think(t_philosopher *philosopher);
 void	print_fork(t_philosopher *philosopher);
 void	print_sleep(t_philosopher *philosopher);
 void	print_think(t_philosopher *philosopher);
+void	print_eat(t_philosopher *philosopher);
 
 #endif
