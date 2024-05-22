@@ -17,6 +17,11 @@ typedef struct s_data
 typedef struct s_philosopher
 {
 	t_data		*data;
+	int			index;
+	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*mutex_lfork;
+	pthread_mutex_t	*mutex_rfork;
+	pthread_mutex_t *mutex_write;
 	pthread_t	thread_id;
 }		t_philosopher;
 
@@ -30,7 +35,7 @@ void	init_mutex(t_data *data, pthread_mutex_t *mutex);
 
 // ==== INIT_PHILOSOPHER ====
 
-void	init_philosopher(t_data *data, t_philosopher *philosopher);
+void	init_philosopher(t_data *data, t_philosopher *philosopher, pthread_mutex_t *mutex);
 
 // ==== LAUNCH_THREADS ====
 
@@ -40,6 +45,12 @@ void	launch_threads(t_data *data, t_philosopher *philosopher, pthread_mutex_t *m
 
 void	eat(t_philosopher *philosopher);
 void	ft_sleep(t_philosopher *philosopher);
-void	think(void);
+void	think(t_philosopher *philosopher);
+
+// ==== PRINT_ACTIONS ====
+
+void	print_fork(t_philosopher *philosopher);
+void	print_sleep(t_philosopher *philosopher);
+void	print_think(t_philosopher *philosopher);
 
 #endif

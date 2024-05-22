@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:37:40 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/21 12:21:42 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:40:26 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,4 @@ void	init_data(char **argv, t_data *data)
 		data->nb_teat = ft_atoi(argv[5]);
 	else
 		data->nb_teat = -1;
-
 }

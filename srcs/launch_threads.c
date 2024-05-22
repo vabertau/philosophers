@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:36:56 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/21 15:38:21 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:39:54 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	*philo_routine(void *philosopher)
 	t_philosopher *tmp;
 
 	tmp = (t_philosopher *)philosopher;
-	//while (!search_dead(philosopher))
-	//{
+	while (1)
+	{
 		eat(tmp);
 		ft_sleep(tmp);
-		think();
-	//}
+		think(tmp);
+	}
 	return (philosopher);
 }
 
@@ -43,7 +43,14 @@ void	launch_threads(t_data *data, t_philosopher *philosopher, pthread_mutex_t *m
 	//protect
 	while (i < data->nb_philos)
 	{
-		pthread_create(&(philosopher->thread_id), NULL, &philo_routine, &(philosopher[i]));
+		pthread_create(&(philosopher[i].thread_id), NULL, &philo_routine, &(philosopher[i]));
+		// protect
+		i++;
+	}
+	i = 0;
+	while (i < data->nb_philos)
+	{
+		pthread_join(philosopher[i].thread_id, NULL);
 		// protect
 		i++;
 	}
