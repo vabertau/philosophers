@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:55:59 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/22 14:32:44 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:04:31 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	pthread_mutex_t mutex[201];
+	pthread_mutex_t mutex[202];
 	t_philosopher	philosopher[200];
 
 	if (argc != 5 && argc != 6)

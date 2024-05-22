@@ -6,16 +6,19 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:36:56 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/22 16:42:23 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:09:42 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	*main_routine(void *philosopher)
+int	ret_endflag(t_philosopher *philosopher)
 {
-	(void)philosopher;
-	return (philosopher);
+	int	ret;
+pthread_mutex_lock(philosopher->mutex_endflag);
+	ret = philosopher->data->end_flag;
+pthread_mutex_unlock(philosopher->mutex_endflag);
+	return (ret);
 }
 
 /*
@@ -30,12 +33,13 @@ void	*philo_routine(void *philosopher)
 
 	tmp = (t_philosopher *)philosopher;
 	if (tmp->index % 2 == 0)
-		usleep(1);
-	while (1)
+		usleep(10);
+	while (!ret_endflag(tmp))
 	{
 		eat(tmp);
 		ft_sleep(tmp);
 		think(tmp);
+		//ft_printf("end_flag = %i\n", tmp->data->end_flag);
 	}
 	return (philosopher);
 }
@@ -47,7 +51,7 @@ void	launch_threads(t_data *data, t_philosopher *philosopher, pthread_mutex_t *m
 
 	(void)mutex;
 	i = 0;
-	pthread_create(&mainthread_id, NULL, &main_routine, philosopher);
+	pthread_create(&mainthread_id, NULL, &setflags_routine, philosopher);
 	//protect
 	while (i < data->nb_philos)
 	{
@@ -62,5 +66,6 @@ void	launch_threads(t_data *data, t_philosopher *philosopher, pthread_mutex_t *m
 		// protect
 		i++;
 	}
+	pthread_join(mainthread_id, NULL);
 	//pthread join calls to wait for threads to end
 }

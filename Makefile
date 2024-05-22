@@ -4,7 +4,8 @@ CC = cc $(FLAGS) -g
 
 FLAGS = -Wall -Werror -Wextra
 
-FILENAMES = main.c init_data.c init_mutex.c launch_threads.c init_philosopher.c actions.c print_action.c
+FILENAMES = main.c init_data.c init_mutex.c launch_threads.c init_philosopher.c actions.c print_action.c \
+setflags_routine.c get_time.c
 
 SRCS = $(addprefix srcs/, $(FILENAMES))
 
