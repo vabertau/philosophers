@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time.c                                         :+:      :+:    :+:   */
+/*   unlock_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 17:17:18 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/23 17:41:18 by vabertau         ###   ########.fr       */
+/*   Created: 2024/05/23 20:38:17 by vabertau          #+#    #+#             */
+/*   Updated: 2024/05/23 20:39:36 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-unsigned long long	get_time(void)
+void	unlock_all(t_philosopher *philosopher)
 {
-	struct timeval	time;
+	int	i;
 
-	gettimeofday(&time, NULL);
-	//protect?
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	i = 0;
+	while (i < philosopher[0].data->nb_philos)
+	{
+		if (philosopher->lfork_locked == 0)
+			
+		philosopher->rfork_locked = 0;
+		i++;
+	}
 }

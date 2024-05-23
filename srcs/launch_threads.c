@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:36:56 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/22 19:09:42 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:40:55 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ pthread_mutex_unlock(philosopher->mutex_endflag);
 	return (ret);
 }
 
+int	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < milliseconds)
+		usleep(50);
+	return (0);
+}
+
 /*
 Philosopher with even indexes wait for 1 ms so that philosopher sitting next to each other do not all take one fork which would block
 
@@ -33,7 +43,7 @@ void	*philo_routine(void *philosopher)
 
 	tmp = (t_philosopher *)philosopher;
 	if (tmp->index % 2 == 0)
-		usleep(10);
+		ft_usleep(1);
 	while (!ret_endflag(tmp))
 	{
 		eat(tmp);
