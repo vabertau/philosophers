@@ -13,17 +13,15 @@ typedef struct s_data
 	int					t_teat;
 	unsigned long long	t_tdie;
 	int					t_tsleep;
-	int					nb_teat;
 	bool				end_flag;
 	unsigned long long	t_start;
-	int					count_maxmeals;
+	int					max_meals;
 }						t_data;
 
 typedef struct s_philosopher
 {
 	t_data				*data;
 	int					index;
-	pthread_mutex_t		*mutex;
 	pthread_mutex_t		*mutex_lfork;
 	pthread_mutex_t		*mutex_rfork;
 	pthread_mutex_t		*mutex_write;
@@ -31,11 +29,12 @@ typedef struct s_philosopher
 	pthread_mutex_t		*mutex_tlastmeal;
 	pthread_t			thread_id;
 	unsigned long long	t_lastmeal;
+	int					count_meals;
 }						t_philosopher;
 
 // ==== INIT_DATA ====
 
-void					init_data(char **argv, t_data *data);
+void					init_data(int argc, char **argv, t_data *data);
 
 // ==== INIT_MUTEX ====
 

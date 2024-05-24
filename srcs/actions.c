@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:19:37 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/23 20:42:10 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:31:05 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,20 @@ void	eat(t_philosopher *philosopher)
 		return ;
 	pthread_mutex_lock(philosopher->mutex_lfork);
 	print_fork(philosopher);
+	if (philosopher->data->nb_philos == 1)
+	{
+		pthread_mutex_unlock(philosopher->mutex_lfork);
+		ft_usleep (philosopher->data->t_tdie + 10);
+		return ;
+	}
 	pthread_mutex_lock(philosopher->mutex_rfork);
 	print_fork(philosopher);
+		print_eat(philosopher);
 	pthread_mutex_lock(philosopher->mutex_tlastmeal);
 	philosopher->t_lastmeal = get_time();
+	philosopher->count_meals++; // not to lock ? not important if setflag reads while writing no rc
 	pthread_mutex_unlock(philosopher->mutex_tlastmeal);
-	print_eat(philosopher);
+
 	ft_usleep(philosopher->data->t_teat);
 	pthread_mutex_unlock(philosopher->mutex_lfork);
 	pthread_mutex_unlock(philosopher->mutex_rfork);
@@ -36,7 +44,7 @@ void	eat(t_philosopher *philosopher)
 
 void	ft_sleep(t_philosopher *philosopher)
 {
-	if (philosopher->data->end_flag == 1)
+	if (philosopher->data->end_flag == 1 || philosopher->data->nb_philos == 1)
 		return ;
 	print_sleep(philosopher);
 	ft_usleep(philosopher->data->t_tsleep);
@@ -44,7 +52,7 @@ void	ft_sleep(t_philosopher *philosopher)
 
 void	think(t_philosopher *philosopher)
 {
-	if (philosopher->data->end_flag == 1)
+	if (philosopher->data->end_flag == 1 || philosopher->data->nb_philos == 1)
 		return ;
 	print_think(philosopher);
 }

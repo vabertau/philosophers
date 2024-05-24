@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:36:56 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/23 19:40:55 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:52:12 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 int	ret_endflag(t_philosopher *philosopher)
 {
 	int	ret;
-pthread_mutex_lock(philosopher->mutex_endflag);
+pthread_mutex_lock(philosopher->mutex_endflag); // not useful ? only reading
 	ret = philosopher->data->end_flag;
 pthread_mutex_unlock(philosopher->mutex_endflag);
 	return (ret);
 }
+
 
 int	ft_usleep(size_t milliseconds)
 {
@@ -32,9 +33,12 @@ int	ft_usleep(size_t milliseconds)
 }
 
 /*
-Philosopher with even indexes wait for 1 ms so that philosopher sitting next to each other do not all take one fork which would block
+philo_routine launches first uneven philosophers then
+even philosophers, to prevent fork blocks.
 
-Philosophers alternatively eat, sleep, think
+It then enters an infinite loop of eat sleep think, broken only if endflag is set to 1 by setflags_routine.
+Also, actions are not executed if endflag has been set to 1, to avoid sleeping and thinking if a death occurs after eating.
+
 */
 
 void	*philo_routine(void *philosopher)
@@ -54,6 +58,22 @@ void	*philo_routine(void *philosopher)
 	return (philosopher);
 }
 
+/*
+Lauching set_flag thread with set flag routine function. Checks in an infinite loop if a philo is dead or if
+all philos have reached max_meals of more, if it happens breaks the loop and sets endflag to 1. Endflag will then stop
+philo threads (stopping thread loop + preventing entering actions).
+
+Launching a thread for each philosopher
+
+Creates each philosopher's thread calling philo_routine. philo_routine launches first uneven philosophers then
+even philosophers, to prevent fork blocks.
+
+It then enters an infinite loop of eat sleep think, broken only if endflag is set to 1 by setflags_routine.
+Also, actions are not executed if endflag has been set to 1, to avoid sleeping and thinking if a death occurs after eating.
+
+Calling pthread_join to wait for the end of processes
+*/
+
 void	launch_threads(t_data *data, t_philosopher *philosopher, pthread_mutex_t *mutex)
 {
 	pthread_t	mainthread_id;
@@ -61,7 +81,8 @@ void	launch_threads(t_data *data, t_philosopher *philosopher, pthread_mutex_t *m
 
 	(void)mutex;
 	i = 0;
-	pthread_create(&mainthread_id, NULL, &setflags_routine, philosopher);
+	if (pthread_create(&mainthread_id, NULL, &setflags_routine, philosopher) != 0)
+		return ((void)destroy_mutex, (void)exit);
 	//protect
 	while (i < data->nb_philos)
 	{

@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:37:40 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/22 17:26:14 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:24:13 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 /*
 Initiates data struct :
 
-- fills data with argv : nb_philos, t_tdie, t_teatm t_tsleep, nb_teat
+- fills data with global data :
+  - nb_philos, t_tdie, t_teat t_tsleep, max_meals using argv
+  - t_tstart using get_time
 */
-void	init_data(char **argv, t_data *data)
+void	init_data(int argc, char **argv, t_data *data)
 {
 	data->nb_philos = ft_atoi(argv[1]);
 	data->t_tdie = ft_atoi(argv[2]);
 	data->t_teat = ft_atoi(argv[3]);
 	data->t_tsleep = ft_atoi(argv[4]);
-	if (argv[5])
-		data->nb_teat = ft_atoi(argv[5]);
-	else
-		data->nb_teat = -1;
 	data->t_start = get_time();
+	if (argc == 6)
+		data->max_meals = ft_atoi(argv[5]);
+	else
+		data->max_meals = -1;
 }

@@ -3,30 +3,48 @@
 
 Initiates data struct :
 
-- fills data with argv : nb_philos, t_tdie, t_teat t_tsleep, nb_teat
+- fills data with global data :
+  - nb_philos, t_tdie, t_teat t_tsleep, max_meals using argv
+  - t_tstart using get_time
 
-2) Launch mutexes
+2) init_mutex
 
-Calls pthreads_mutex_init() the same nb of times as the nb of philosophers
-pthread_mutex_init(&forks[i], NULL)
+Calls pthreads_mutex_init() the same nb of times as the nb of philosophers to initialize
+the mutexes for forks, + 3 for mutex_write, mutex_endflag, mutex_tlastmeal
 
-3) Init philos
+3) init_philosopher
 
 Initializes the philosopher struct:
 
-Giving access to data to each philosopher (needed for access to t_teat, etc)
+Giving access to data to each philosopher
 
 Giving access to mutexes for left and right forks to each philosopher
 
-Giving access to mutex_write to each philosopher (using mutex 200)
+Giving access to mutex_write, mutex_endflag, mutex_tlastmeal to all philosophers
 
-4) Launch threads
+Giving an index to philosophers
 
-Calling pthread_create and pthread_join
+Initializing last_meal at get_time
 
-Creates each philosopher's thread
+4) launch_threads
 
-5) Destroy threads
+Lauching set_flag thread with set flag routine function. Checks in an infinite loop if a philo is dead or if
+all philos have reached max_meals of more, if it happens breaks the loop and sets endflag to 1. Endflag will then stop
+philo threads (stopping thread loop + preventing entering actions).
+
+Launching a thread for each philosopher
+
+Creates each philosopher's thread calling philo_routine. philo_routine launches first uneven philosophers then
+even philosophers, to prevent fork blocks.
+
+It then enters an infinite loop of eat sleep think, broken only if endflag is set to 1 by setflags_routine.
+Also, actions are not executed if endflag has been set to 1, to avoid sleeping and thinking if a death occurs after eating.
+
+Calling pthread_join to wait for the end of processes
+
+5) destroy_mutex
+
+Destroys all mutexes
 
 
 
