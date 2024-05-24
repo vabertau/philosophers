@@ -71,4 +71,8 @@ void					print_died(t_philosopher *philosopher);
 unsigned long long		get_time(void);
 int						ft_usleep(size_t milliseconds);
 
+// ==== DESTROY_MUTEX ====
+
+void	destroy_mutex(t_data data, pthread_mutex_t *mutex);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:25:15 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/23 20:42:35 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:52:23 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	init_philosopher(t_data *data, t_philosopher *philosopher, pthread_mutex_t 
 			(philosopher[i]).mutex_lfork = &(mutex[i + 1]);
 		else
 			(philosopher[i]).mutex_lfork = &(mutex[0]);
-		(philosopher[i]).mutex_write = &(mutex[200]);
+		(philosopher[i]).mutex_write = &(mutex[data->nb_philos]);
 		(philosopher[i]).index = i;
 		(philosopher[i]).t_lastmeal = get_time(); // != start time in data bc of exec time ?
-		(philosopher[i]).mutex_endflag = &(mutex[201]);
-		(philosopher[i]).mutex_tlastmeal = &(mutex[202]);
+		(philosopher[i]).mutex_endflag = &(mutex[data->nb_philos + 1]);
+		(philosopher[i]).mutex_tlastmeal = &(mutex[data->nb_philos + 2]);
 		i++;
 	}
 }
