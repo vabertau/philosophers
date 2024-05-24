@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:25:15 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/24 15:46:57 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:29:36 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ Giving an index to philosophers
 Initializing last_meal at get_time
 */
 
-void	init_philosopher(t_data *data, t_philosopher *philosopher, pthread_mutex_t *mutex)
+void	init_philosopher(t_data *data, t_philosopher *philosopher,
+		pthread_mutex_t *mutex)
 {
 	int	i;
 
@@ -34,7 +35,6 @@ void	init_philosopher(t_data *data, t_philosopher *philosopher, pthread_mutex_t 
 	while (i < data->nb_philos)
 	{
 		(philosopher[i]).data = data;
-		//(philosopher[i]).mutex = mutex;
 		(philosopher[i]).mutex_rfork = &(mutex[i]);
 		if (i + 1 < data->nb_philos)
 			(philosopher[i]).mutex_lfork = &(mutex[i + 1]);
@@ -42,7 +42,7 @@ void	init_philosopher(t_data *data, t_philosopher *philosopher, pthread_mutex_t 
 			(philosopher[i]).mutex_lfork = &(mutex[0]);
 		(philosopher[i]).mutex_write = &(mutex[data->nb_philos]);
 		(philosopher[i]).index = i;
-		(philosopher[i]).t_lastmeal = get_time(); // != start time in data bc of exec time ?
+		(philosopher[i]).t_lastmeal = get_time();
 		(philosopher[i]).mutex_endflag = &(mutex[data->nb_philos + 1]);
 		(philosopher[i]).mutex_tlastmeal = &(mutex[data->nb_philos + 2]);
 		(philosopher[i]).count_meals = 0;

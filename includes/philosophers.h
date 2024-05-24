@@ -2,10 +2,12 @@
 
 # define PHILOSOPHERS_H
 
-# include "../libftprintf/ft_printf.h"
 # include <pthread.h>
+# include <stdarg.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_data
 {
@@ -47,7 +49,7 @@ void					init_philosopher(t_data *data,
 
 // ==== THREADS ====
 
-void					launch_threads(t_data *data, t_philosopher *philosopher,
+int						launch_threads(t_data *data, t_philosopher *philosopher,
 							pthread_mutex_t *mutex);
 void					*setflags_routine(void *philosopher);
 
@@ -76,10 +78,30 @@ void					destroy_mutex(t_data data, pthread_mutex_t *mutex);
 
 // ==== THREAD_ERRORS ====
 
-void					thread_create_error(int threads_launched,
+int						thread_create_error(int threads_launched,
 							t_philosopher *philosopher, pthread_mutex_t *mutex,
 							int mainthread_id);
-void					thread_join_error(t_philosopher *philosopher,
+int						thread_join_error(t_philosopher *philosopher,
 							pthread_mutex_t *mutex);
+
+// ==== CHECK_ARG ====
+
+int						check_arg(int argc, char **argv);
+
+// ==== LIBFT ====
+
+int						ft_atoi(const char *nptr);
+int						ft_isdigit(int c);
+int						ft_printf(const char *str, ...);
+int						ft_putptr(unsigned long long ptr);
+int						ft_putstr(char *s);
+int						ft_putnbrlen_fd(int n, int fd);
+int						ft_putunslen_fd(unsigned int n, int fd);
+int						ft_puthexa(unsigned long long ptr, char *table);
+int						ft_puthexa2(unsigned int nb, char *table);
+void					ft_putchar_fd(char c, int fd);
+void					ft_putstr_fd(char *s, int fd);
+int						ft_strlen(const char *s);
+void					ft_putnbr_fd(int n, int fd);
 
 #endif

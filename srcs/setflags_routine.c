@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:50:10 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/24 15:44:58 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:31:03 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@ void	search_dead(t_philosopher *philosopher)
 	i = 0;
 	while (i < philosopher->data->nb_philos)
 	{
-		//pthread_mutex_lock(philosopher->mutex_tlastmeal); // not useful ? cause only reading
-		if (get_time() - philosopher[i].t_lastmeal > philosopher[i].data->t_tdie)
+		pthread_mutex_lock(philosopher->mutex_tlastmeal);
+		if (get_time()
+			- philosopher[i].t_lastmeal > philosopher[i].data->t_tdie)
 		{
-			//pthread_mutex_unlock(philosopher->mutex_tlastmeal);
+			pthread_mutex_unlock(philosopher->mutex_tlastmeal);
 			pthread_mutex_lock(philosopher->mutex_endflag);
 			philosopher[i].data->end_flag = 1;
 			pthread_mutex_unlock(philosopher->mutex_endflag);
 			print_died(&(philosopher[i]));
-			//pthread_mutex_unlock(philosopher->mutex_write);
-			//pthread_mutex_lock(philosopher->mutex_endflag);
-			//pthread_mutex_unlock(philosopher->mutex_endflag);
-			//pthread_mutex_unlock(philosopher->mutex_write);
 			break ;
 		}
 		else
@@ -46,10 +43,17 @@ void	search_maxmeals(t_philosopher *philosopher)
 	i = 0;
 	while (i < philosopher[0].data->nb_philos)
 	{
+		pthread_mutex_lock(philosopher->mutex_tlastmeal);
 		if (philosopher[i].count_meals < philosopher[0].data->max_meals)
+		{
+			pthread_mutex_unlock(philosopher->mutex_tlastmeal);
 			return ;
+		}
 		else
+		{
+			pthread_mutex_unlock(philosopher->mutex_tlastmeal);
 			i++;
+		}
 	}
 	philosopher[0].data->end_flag = 1;
 }
@@ -61,7 +65,9 @@ philo threads (stopping thread loop + preventing entering actions).*/
 
 void	*setflags_routine(void *philosopher)
 {
-	t_data	*data = ((t_philosopher *)philosopher)->data;
+	t_data	*data;
+
+	data = ((t_philosopher *)philosopher)->data;
 	while (!data->end_flag)
 	{
 		search_dead((t_philosopher *)philosopher);

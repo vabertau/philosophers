@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 16:55:59 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/24 18:29:01 by vabertau         ###   ########.fr       */
+/*   Created: 2023/11/15 18:37:11 by vabertau          #+#    #+#             */
+/*   Updated: 2024/05/24 18:24:13 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	main(int argc, char **argv)
+void	ft_putchar_fd(char c, int fd)
 {
-	t_data			data;
-	pthread_mutex_t	mutex[204];
-	t_philosopher	philosopher[200];
-
-	if (check_arg(argc, argv) == -1)
-		return (-1);
-	init_data(argc, argv, &data);
-	init_mutex(&data, mutex);
-	init_philosopher(&data, philosopher, mutex);
-	if (launch_threads(&data, philosopher, mutex) == -1)
-		return (-1);
-	destroy_mutex(data, mutex);
+	write (fd, &c, 1);
 }
+/*
+int	main(void)
+{
+	char *str = "Hello, world!";
+	int fd = 1;
+	int len = ft_strlen(str);
+
+	write(fd, str, len);
+	return 0;
+}*/
