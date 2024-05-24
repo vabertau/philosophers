@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:37:40 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/24 11:24:13 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:50:24 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_data(int argc, char **argv, t_data *data)
 	data->t_teat = ft_atoi(argv[3]);
 	data->t_tsleep = ft_atoi(argv[4]);
 	data->t_start = get_time();
+	data->end_flag = 0;
 	if (argc == 6)
 		data->max_meals = ft_atoi(argv[5]);
 	else

@@ -72,6 +72,14 @@ int						ft_usleep(size_t milliseconds);
 
 // ==== DESTROY_MUTEX ====
 
-void	destroy_mutex(t_data data, pthread_mutex_t *mutex);
+void					destroy_mutex(t_data data, pthread_mutex_t *mutex);
+
+// ==== THREAD_ERRORS ====
+
+void					thread_create_error(int threads_launched,
+							t_philosopher *philosopher, pthread_mutex_t *mutex,
+							int mainthread_id);
+void					thread_join_error(t_philosopher *philosopher,
+							pthread_mutex_t *mutex);
 
 #endif
