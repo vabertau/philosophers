@@ -6,7 +6,7 @@
 /*   By: vabertau <vabertau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:36:56 by vabertau          #+#    #+#             */
-/*   Updated: 2024/05/24 18:29:57 by vabertau         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:39:01 by vabertau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*philo_routine(void *philosopher)
 
 	tmp = (t_philosopher *)philosopher;
 	if (tmp->index % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(5);
 	while (!ret_endflag(tmp))
 	{
 		eat(tmp);
