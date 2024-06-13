@@ -12,3 +12,5 @@ The simulation stops when a philosopher dies of starvation
 Each philosopher represents a separate thread, and synchronization mechanisms (mutexes) are used.
 
 The challenge lies in preventing deadlocks and ensuring that all philosophers get a chance to eat while avoiding starvation.
+
+Usage : ./philo 		number_of_philosophers 		time_to_die time_to_eat time_to_sleep 		[number_of_times_each_philosopher_must_eat]
